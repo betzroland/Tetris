@@ -19,6 +19,7 @@ string intToString(int t){
 Score::Score(){ score=0; }
 
 void Score::gameover_window(RenderWindow& window){
+    sleep(milliseconds(1000));
     window.clear();
     Text text1;
     Text text2;
@@ -62,6 +63,8 @@ void Score::gameover_window(RenderWindow& window){
     window.draw(text3);
 
     window.display();
+    sleep(milliseconds(3000));
+    window.close();
 }
 
 void Score::score_count(Block* arrived, int& N, int& M, int& y_min, int& db){

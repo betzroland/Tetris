@@ -10,7 +10,7 @@ Engine::Engine(){
     M=10;   N=20;
     db=0;
     y_min=N-1;
-    rotator=false;
+    rotation=false;
     for(int i=0; i<250; i++){
         color[i]=-1;
     }
@@ -136,7 +136,8 @@ bool Engine::is_gameover(){
      return false;
 }
 
-void Engine::rotation(){
+void Engine::rotate_block(){
+    if(rotation==true && color[db]!=1){
     Block p;
     p.x=block[0].x;
     p.y=block[0].y;
@@ -201,6 +202,31 @@ void Engine::rotation(){
         }
     }
     r1=0;   l1=0;   r2=0;   l2=0;
+    rotation=false;
+    }
+}
+
+void Engine::move_block(){
+    if (Keyboard::isKeyPressed(Keyboard::Right) && touch_block_fromleft()==false && touch_wallfromleft()==false){
+        for(int i=0; i<4; i++){
+            block[i].x=block[i].x+1;
+        }
+        sleep(milliseconds(100));
+        }
+
+    if (Keyboard::isKeyPressed(Keyboard::Left) && touch_block_fromright()==false && touch_wallfromright()==false){
+        for(int i=0; i<4; i++){
+            block[i].x=block[i].x-1;
+        }
+        sleep(milliseconds(100));
+    }
+
+    if(Keyboard::isKeyPressed(Keyboard::Down) && touch_bottom()==false && touch_block_y()==false){
+        for(int i=0; i<4; i++){
+            block[i].y=block[i].y+1;
+        }
+        sleep(milliseconds(50));
+    }
 }
 
 void Engine::attach_block(){
