@@ -38,10 +38,7 @@ while(window.isOpen()){
         engine.set_blockshape();
 
         if(engine.is_gameover()){
-            sleep(milliseconds(1000));
             scr.gameover_window(window);
-            sleep(milliseconds(3000));
-            window.close();
         }
 
         while(engine.touch_bottom()==false && engine.touch_block_y()==false){
@@ -59,42 +56,20 @@ while(window.isOpen()){
             draw.draw_field(engine.M, engine.N, window);
             draw.draw_blocks(engine.block, engine.color, engine.arrived, window, engine.db);
 
-            if (Keyboard::isKeyPressed(Keyboard::Right) && engine.touch_block_fromleft()==false && engine.touch_wallfromleft()==false){
-                for(int i=0; i<4; i++){
-                    engine.block[i].x=engine.block[i].x+1;
-                }
-                sleep(milliseconds(90));
-                }
-
-            if (Keyboard::isKeyPressed(Keyboard::Left) && engine.touch_block_fromright()==false && engine.touch_wallfromright()==false){
-                for(int i=0; i<4; i++){
-                    engine.block[i].x=engine.block[i].x-1;
-                }
-                sleep(milliseconds(90));
-            }
-
-            if(Keyboard::isKeyPressed(Keyboard::Down) && engine.touch_bottom()==false && engine.touch_block_y()==false){
-                for(int i=0; i<4; i++){
-                    engine.block[i].y=engine.block[i].y+1;
-                }
-                sleep(milliseconds(45));
-                }
-
             while(window.pollEvent(event)){
                 if(event.type==Event::Closed){
                     window.close();
                 }
                 if(event.type==Event::KeyPressed){
                     if(event.key.code==Keyboard::Up){
-                        engine.rotator=true;
+                        engine.rotation=true;
                     }
                 }
             }
 
-            if(engine.rotator==true && engine.color[engine.db]!=1){
-                engine.rotation();
-            }
-            engine.rotator=false;
+            engine.rotate_block();
+
+            engine.move_block();
 
             window.display();
         }
