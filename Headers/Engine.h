@@ -14,7 +14,7 @@ public:
     int M, N;
     int db;
     int y_min;
-    bool rotator;
+    bool rotation;
     int color[250];  // Stores the colors of the created blocks.
     Block block[4];
     Block arrived[1000];
@@ -35,9 +35,11 @@ public:
 
     bool touch_wallfromright();     // Detects whether a block has touched the wall from right side or not.
 
-    bool is_gameover();     //Returns true, if the blocks reached the top of the wall.
+    bool is_gameover();     // Returns true, if the blocks reached the top of the wall.
 
-    void rotation();    // Function for rotating a block.
+    void rotate_block();    // Function for rotating a block.
+
+    void move_block();      // Controls the blocks (moving right, left, and accelerating).
 
     void attach_block();    //Attaches newly arriving block to the array of the fallen ones.
 
