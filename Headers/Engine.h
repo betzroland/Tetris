@@ -1,9 +1,6 @@
 #ifndef ENGINE_H_INCLUDED
 #define ENGINE_H_INCLUDED
 
-using namespace std;
-using namespace sf;
-
 class Block{
     public:
         int x, y;

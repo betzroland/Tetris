@@ -2,10 +2,7 @@
 #define SCORE_H_INCLUDED
 #include "Engine.h"
 
-using namespace std;
-using namespace sf;
-
-string intToString(int t);  // Just an auxiliary function. Converts an int type to string.
+std::string intToString(int t);  // Just an auxiliary function. Converts an int type to string.
 
 class Score{
 public:
@@ -14,7 +11,7 @@ public:
 
     Score();    // Initializing score.
 
-    void gameover_window(RenderWindow& window);    // Displays "game over" and score.
+    void gameover_window(sf::RenderWindow& window);    // Displays "game over" and score.
 
     void score_count(Block* arrived, int& N, int& M, int& y_min, int& db); // Counting scores, and hiding the completed rows.
 
