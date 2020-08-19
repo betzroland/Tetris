@@ -11,13 +11,16 @@ public:
 
     Draw(); // Initializing class variables.
 
-    void set_BlockColor(int* color, int& db);   // Sets the color of a new block.
+    void set_BlockColor(int* color, const int db);   // Sets the color of a new block.
 
-    void draw_field(int& M, int& N, sf::RenderWindow& window);  // Drawing tetris field.
+    void draw_field(const int M, const int N, sf::RenderWindow& window);  // Drawing tetris field.
 
-    void draw_blocks(Block* block, int* color, Block* arrived, sf::RenderWindow& window, int& db);  // Drawing blocks.
+    void draw_blocks(Block* block, int* color, Block* arrived, sf::RenderWindow& window, const int db);  // Drawing blocks.
 
     void draw_openingwindow(sf::RenderWindow& window);  // Opening window when game is starting.
+
+    void draw_gameover(sf::RenderWindow& window, const int score, int& highest);    // Drawing game over screen.
+
 };
 
 
