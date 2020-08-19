@@ -30,7 +30,6 @@ while(window.isOpen()){
         draw.draw_openingwindow(window);
     }
     else{
-
         engine.color[engine.db]=rand()%7;
 
         draw.set_BlockColor(engine.color, engine.db);
@@ -38,7 +37,7 @@ while(window.isOpen()){
         engine.set_blockshape();
 
         if(engine.is_gameover()){
-            scr.gameover_window(window);
+            draw.draw_gameover(window, scr.score, scr.highest);
         }
 
         while(engine.touch_bottom()==false && engine.touch_block_y()==false){

@@ -1,5 +1,4 @@
 #include <fstream>
-#include <sstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -8,66 +7,9 @@
 using namespace std;
 using namespace sf;
 
-string intToString(int t){
-    string s;
-    ostringstream out;
-    out << t;
-    s = out.str();
-    return s;
-}
-
 Score::Score(){ score=0; }
 
-void Score::gameover_window(RenderWindow& window){
-    sleep(milliseconds(1000));
-    window.clear();
-    Text text1;
-    Text text2;
-    Text text3;
-
-    Font font;
-    font.loadFromFile("arial.ttf");
-
-    text1.setFont(font);
-    text2.setFont(font);
-    text3.setFont(font);
-
-    text1.setString("Game over!");
-    text2.setString("Score: "+intToString(score));
-
-    ifstream file;
-    file.open("highest.txt");
-    file >> highest;
-    file.close();
-
-    text3.setString("Highest score: "+intToString(highest));
-
-    text1.setCharacterSize(24);
-    text2.setCharacterSize(24);
-    text3.setCharacterSize(24);
-
-    text1.setFillColor(Color::Green);
-    text2.setFillColor(Color::Green);
-    text3.setFillColor(Color::Green);
-
-    text1.setStyle(Text::Bold);
-    text2.setStyle(Text::Bold);
-    text3.setStyle(Text::Bold);
-
-    text1.setPosition(60, 120);
-    text2.setPosition(75, 160);
-    text3.setPosition(30, 200);
-
-    window.draw(text1);
-    window.draw(text2);
-    window.draw(text3);
-
-    window.display();
-    sleep(milliseconds(3000));
-    window.close();
-}
-
-void Score::score_count(Block* arrived, int& N, int& M, int& y_min, int& db){
+void Score::score_count(Block* arrived, const int N, const int M, int& y_min, const int db){
     int index[M];
     for(int i=0; i<M; i++){
             index[i]={-1};
