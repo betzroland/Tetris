@@ -1,6 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
 #include "Engine.h"
 
 using namespace std;

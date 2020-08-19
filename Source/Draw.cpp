@@ -1,8 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
 #include <fstream>
-#include <sstream>
 #include "Draw.h"
 #include "Score.h"
 
