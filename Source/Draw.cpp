@@ -23,26 +23,26 @@ void Draw::set_BlockColor(int* color, const int db){
     sprite1.setTextureRect(IntRect(color[db]*pixel, 0, pixel, pixel));
 }
 
-void Draw::draw_field(const int M, const int N, RenderWindow& window){
-    for (int i=0; i<M; i++){
-        for (int j=0; j<N; j++){
+void Draw::draw_field(const Engine& engine, RenderWindow& window){
+    for (int i=0; i<engine.M; i++){
+        for (int j=0; j<engine.N; j++){
             sprite2.setPosition(i*pixel, j*pixel);
             window.draw(sprite2);
         }
     }
 }
 
-void Draw::draw_blocks(Block* block, int* color, Block* arrived, RenderWindow& window, const int db){
+void Draw::draw_blocks(Engine& engine, RenderWindow& window){
     //draw falling block
     for(int i=0; i<4; i++){
-        sprite1.setPosition(block[i].x*pixel, block[i].y*pixel);
+        sprite1.setPosition(engine.block[i].x*pixel, engine.block[i].y*pixel);
         window.draw(sprite1);
     }
 
     //draw arrived blocks
-    for(int i=0; i<db*4; i++){
-        sprite3.setTextureRect(IntRect(color[i/4]*pixel, 0, pixel, pixel));
-        sprite3.setPosition(arrived[i].x*pixel, arrived[i].y*pixel);
+    for(int i=0; i<engine.db*4; i++){
+        sprite3.setTextureRect(IntRect(engine.color[i/4]*pixel, 0, pixel, pixel));
+        sprite3.setPosition(engine.arrived[i].x*pixel, engine.arrived[i].y*pixel);
         window.draw(sprite3);
     }
 }
@@ -95,7 +95,7 @@ void Draw::draw_openingwindow(RenderWindow& window){
     window.clear();
 }
 
-void Draw::draw_gameover(RenderWindow& window, const int score, int& highest){
+void Draw::draw_gameover(RenderWindow& window, Score& scr){
     sleep(milliseconds(1000));
     window.clear();
     Text text1;
@@ -110,14 +110,14 @@ void Draw::draw_gameover(RenderWindow& window, const int score, int& highest){
     text3.setFont(font);
 
     text1.setString("Game over!");
-    text2.setString("Score: "+to_string(score));
+    text2.setString("Score: "+to_string(scr.score));
 
     ifstream file;
     file.open("highest.txt");
-    file >> highest;
+    file >> scr.highest;
     file.close();
 
-    text3.setString("Highest score: "+to_string(highest));
+    text3.setString("Highest score: "+to_string(scr.highest));
 
     text1.setCharacterSize(24);
     text2.setCharacterSize(24);

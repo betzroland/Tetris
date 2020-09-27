@@ -9,7 +9,7 @@ public:
 
     Score();    // Initializing score.
 
-    void score_count(Block* arrived, const int N, const int M, int& y_min, const int db); // Counting scores, and hiding the completed rows.
+    void score_count(Engine& engine); // Counting scores, and hiding the completed rows.
 
     void save_highest();    // Saves highest score.
 };

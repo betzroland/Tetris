@@ -35,7 +35,7 @@ while(window.isOpen()){
         engine.set_blockshape();
 
         if(engine.is_gameover()){
-            draw.draw_gameover(window, scr.score, scr.highest);
+            draw.draw_gameover(window, scr);
         }
 
         while(engine.touch_bottom()==false && engine.touch_block_y()==false){
@@ -50,8 +50,8 @@ while(window.isOpen()){
             timer=0;
             }
 
-            draw.draw_field(engine.M, engine.N, window);
-            draw.draw_blocks(engine.block, engine.color, engine.arrived, window, engine.db);
+            draw.draw_field(engine, window);
+            draw.draw_blocks(engine, window);
 
             while(window.pollEvent(event)){
                 if(event.type==Event::Closed){
@@ -73,7 +73,7 @@ while(window.isOpen()){
 
         engine.attach_block();
 
-        scr.score_count(engine.arrived, engine.N, engine.M, engine.y_min, engine.db);
+        scr.score_count(engine);
     }
 }
 

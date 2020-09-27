@@ -7,22 +7,22 @@ using namespace sf;
 
 Score::Score(){ score=0; }
 
-void Score::score_count(Block* arrived, const int N, const int M, int& y_min, const int db){
-    int index[M];
-    for(int i=0; i<M; i++){
+void Score::score_count(Engine& engine){
+    int index[engine.M];
+    for(int i=0; i<engine.M; i++){
             index[i]={-1};
             }
-    int row=N-1;
+    int row=engine.N-1;
     int counter=0;
     int rowcounter=0;
 
-    for(int i=row; i>=y_min; i--){
-        for(int j=0; j<db*4; j++){
-            if(arrived[j].y==i){
+    for(int i=row; i>=engine.y_min; i--){
+        for(int j=0; j<engine.db*4; j++){
+            if(engine.arrived[j].y==i){
                 counter++;
             }
         }
-        if(counter==M){
+        if(counter==engine.M){
             rowcounter++;
             counter=0;
         }
@@ -42,24 +42,24 @@ void Score::score_count(Block* arrived, const int N, const int M, int& y_min, co
     }
     rowcounter=0;
 
-    while(row>=y_min){
-        for(int i=0; i<db*4; i++){
-            if(arrived[i].y==row){
+    while(row>=engine.y_min){
+        for(int i=0; i<engine.db*4; i++){
+            if(engine.arrived[i].y==row){
                 index[counter]=i;
                 counter++;
             }
         }
-        if(counter==M){
-            for(int l=0; l<M; l++){
-                arrived[index[l]].y=arrived[index[l]].y+20;
+        if(counter==engine.M){
+            for(int i=0; i<engine.M; i++){
+                engine.arrived[index[i]].y=engine.arrived[index[i]].y+20;
             }
-            for(int h=0; h<db*4; h++){
-                if(arrived[h].y<row){
-                arrived[h].y=arrived[h].y+1;
+            for(int i=0; i<engine.db*4; i++){
+                if(engine.arrived[i].y<row){
+                engine.arrived[i].y=engine.arrived[i].y+1;
                 }
             }
             row=row;
-            y_min=y_min+1;
+            engine.y_min=engine.y_min+1;
         }
         else {row=row-1;}
         counter=0;

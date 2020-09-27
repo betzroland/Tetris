@@ -1,6 +1,7 @@
 #ifndef DRAW_H_INCLUDED
 #define DRAW_H_INCLUDED
 #include "Engine.h"
+#include "Score.h"
 
 class Draw{
 public:
@@ -9,17 +10,17 @@ public:
     sf::Sprite sprite1, sprite2, sprite3;
     bool start;
 
-    Draw(); // Initializing class variables.
+    Draw();
 
-    void set_BlockColor(int* color, const int db);   // Sets the color of a new block.
+    void set_BlockColor(int* color, const int db);
 
-    void draw_field(const int M, const int N, sf::RenderWindow& window);  // Drawing tetris field.
+    void draw_field(const Engine& engine, sf::RenderWindow& window);
 
-    void draw_blocks(Block* block, int* color, Block* arrived, sf::RenderWindow& window, const int db);  // Drawing blocks.
+    void draw_blocks(Engine& engine, sf::RenderWindow& window);
 
-    void draw_openingwindow(sf::RenderWindow& window);  // Opening window when game is starting.
+    void draw_openingwindow(sf::RenderWindow& window);
 
-    void draw_gameover(sf::RenderWindow& window, const int score, int& highest);    // Drawing game over screen.
+    void draw_gameover(sf::RenderWindow& window, Score& scr);
 
 };
 
