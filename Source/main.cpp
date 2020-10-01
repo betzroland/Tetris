@@ -22,12 +22,10 @@ float timer=0;
 float delay=0.3;
 Clock clock;
 
+draw.draw_openingwindow(window);
+
 while(window.isOpen()){
 
-    if(draw.start==true){
-        draw.draw_openingwindow(window);
-    }
-    else{
         engine.color[engine.db]=rand()%7;
 
         draw.set_BlockColor(engine.color, engine.db);
@@ -38,7 +36,7 @@ while(window.isOpen()){
             draw.draw_gameover(window, scr);
         }
 
-        while(engine.touch_bottom()==false && engine.touch_block_y()==false){
+        while(engine.touch_bottom()==false){
             float time=clock.getElapsedTime().asSeconds();
             clock.restart();
             timer=timer+time;
@@ -66,7 +64,7 @@ while(window.isOpen()){
 
             engine.rotate_block();
 
-            engine.move_block();
+            engine.move_block(delay);
 
             window.display();
         }
@@ -74,7 +72,6 @@ while(window.isOpen()){
         engine.attach_block();
 
         scr.score_count(engine);
-    }
 }
 
 scr.save_highest();

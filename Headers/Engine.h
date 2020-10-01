@@ -12,33 +12,25 @@ public:
     int db;
     int y_min;
     bool rotation;
-    int color[250];  // Stores the colors of the created blocks.
+    int color[250];
     Block block[4];
+    Block block_copy[4];
     Block arrived[1000];
 
     Engine();
 
-    void set_blockshape();  // Setting block shape, and places it into its starting position.
+    void set_blockshape();
 
-    bool touch_bottom();    // Detects whether a block has touched the bottom of the Tetris-field or not.
+    bool touch_bottom();
 
-    bool touch_block_y();  // Detects whether an arriving block has reached a placed block or not.
+    bool is_gameover();
 
-    bool touch_block_fromleft(); // Detects whether a block has touched a placed block from left side or not.
+    void rotate_block();
 
-    bool touch_block_fromright();  // Detects whether a block has touched a placed block from right side or not.
+    void move_block(float& delay);
+    void attach_block();
 
-    bool touch_wallfromleft();      // Detects whether a block has touched the wall from left side or not.
-
-    bool touch_wallfromright();     // Detects whether a block has touched the wall from right side or not.
-
-    bool is_gameover();     // Returns true, if the blocks reached the top of the wall.
-
-    void rotate_block();    // Function for rotating a block.
-
-    void move_block();      // Controls the blocks (moving right, left, and accelerating).
-
-    void attach_block();    //Attaches newly arriving block to the array of the fallen ones.
+    bool is_overlap();
 
 };
 

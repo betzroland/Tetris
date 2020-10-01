@@ -16,7 +16,6 @@ Draw::Draw(){
     sprite3.setTexture(texture1);
 
     pixel=27;
-    start=true;
 }
 
 void Draw::set_BlockColor(int* color, const int db){
@@ -90,8 +89,6 @@ void Draw::draw_openingwindow(RenderWindow& window){
     sleep(milliseconds(1000));
     window.clear();
     }
-
-    start=false;
     window.clear();
 }
 

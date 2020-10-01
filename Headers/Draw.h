@@ -8,7 +8,6 @@ public:
     int pixel;
     sf::Texture texture1, texture2;
     sf::Sprite sprite1, sprite2, sprite3;
-    bool start;
 
     Draw();
 

@@ -13,8 +13,8 @@ Engine::Engine(){
         color[i]=-1;
     }
     for(int i=0; i<1000; i++){
-        arrived[i].x=-1;
-        arrived[i].y=-1;
+        arrived[i].x=i;
+        arrived[i].y=N+1;
     }
 }
 
@@ -43,86 +43,22 @@ void Engine::set_blockshape(){
         block[i].x=shapes_x[color[db]][i]+(M/2)-1;
         block[i].y=shapes_y[color[db]][i]-1;
     }
-
 }
 
 bool Engine::touch_bottom(){
-    for(int i=0; i<4; i++){
     if(block[0].y==(N-1) || block[1].y==(N-1) || block[2].y==(N-1) || block[3].y==(N-1) ){
         return true;
     }
-        else return false;
-    }
-}
-
-bool Engine::touch_block_y(){
-    int a=0;
-    if(db==0){return false;}
-    else if(db>0){
+    else{
         for(int i=0; i<4; i++){
             for(int j=0; j<db*4; j++){
                 if(block[i].y==arrived[j].y-1 && block[i].x==arrived[j].x){
-                    a=1;
+                    return true;
                 }
             }
         }
     }
-    if(a==1){return true;}
-    else return false;
-}
-
-bool Engine::touch_block_fromleft(){
-    int a=0;
-    if(db==0){return false;}
-    else if(db>0){
-        for(int i=0; i<4; i++){
-            for(int j=0; j<db*4; j++){
-                if(block[i].x==arrived[j].x-1 && block[i].y==arrived[j].y){
-                    a=1;
-                }
-            }
-        }
-    }
-    if(a==1){return true;}
-    else return false;
-}
-
-bool Engine::touch_block_fromright(){
-    int a=0;
-    if(db==0){return false;}
-    else if(db>0){
-        for(int i=0; i<4; i++){
-            for(int j=0; j<db*4; j++){
-                if(block[i].x==arrived[j].x+1 && block[i].y==arrived[j].y){
-                    a=1;
-                }
-            }
-        }
-    }
-    if(a==1){return true;}
-    else return false;
-}
-
-bool Engine::touch_wallfromleft(){
-    int a=0;
-    for(int i=0; i<4; i++){
-        if(block[i].x==M-1){
-            a=1;
-        }
-    }
-    if(a==1){return true;}
-    else return false;
-}
-
-bool Engine::touch_wallfromright(){
-    int a=0;
-    for(int i=0; i<4; i++){
-        if(block[i].x==0){
-            a=1;
-        }
-    }
-    if(a==1){return true;}
-    else return false;
+    return false;
 }
 
 bool Engine::is_gameover(){
@@ -136,94 +72,56 @@ bool Engine::is_gameover(){
 
 void Engine::rotate_block(){
     if(rotation==true && color[db]!=1){
-    Block p;
-    p.x=block[0].x;
-    p.y=block[0].y;
 
-    for(int i=1; i<4; i++){
-        int x=block[i].y-p.y;
-        int y=block[i].x-p.x;
-        block[i].x=p.x-x;
-        block[i].y=p.y+y;
-    }
-
-    int a=0;
-    for(int j=1; j<4; j++){         //Withdraw rotation, if it would overlap with another block.
-        for(int i=0; i<db*4; i++){
-            if(block[j].x==arrived[i].x && block[j].y==arrived[i].y){
-                a=1;
-            }
-        }
-    }
-    if(a==1){
-        for(int j=1; j<4; j++){
-            int x=block[j].y-p.y;
-            int y=block[j].x-p.x;
-            block[j].x=p.x+x;
-            block[j].y=p.y-y;
-        }
-    }
-    a=0;
-    int r1=0;   int l1=0;   int r2=0;   int l2=0;
     for(int i=0; i<4; i++){
-        if(block[i].x>M-1){
-            r1=1;
-        }
-        if(block[i].x>M){
-            r2=1;
-        }
-        if(block[i].x<0){
-            l1=1;
-        }
-        if(block[i].x<-1){
-            l2=1;
-        }
+        block_copy[i]=block[i];
     }
-    if(r1==1){                      // Correction might be needed, if rotation happens directly beside walls.
+
+    for(int i=1; i<4; i++){             // rotate
+        int x=block[i].y-block[0].y;
+        int y=block[i].x-block[0].x;
+        block[i].x=block[0].x-x;
+        block[i].y=block[0].y+y;
+    }
+
+    if(Engine::is_overlap()){
         for(int i=0; i<4; i++){
-            block[i].x=block[i].x-1;
+            block[i]=block_copy[i];
         }
     }
-    if(r2==1){                      // I block needs two steps of correction, if it is rotated directly beside the wall.
-        for(int i=0; i<4; i++){
-            block[i].x=block[i].x-1;
-        }
-    }
-    if(l1==1){                      // Correction might be needed, if rotation happens directly beside walls.
-        for(int i=0; i<4; i++){
-            block[i].x=block[i].x+1;
-        }
-    }
-    if(l2==1){                      // I block needs two steps of correction, if it is rotated directly beside the wall.
-        for(int i=0; i<4; i++){
-            block[i].x=block[i].x+1;
-        }
-    }
-    r1=0;   l1=0;   r2=0;   l2=0;
     rotation=false;
     }
 }
 
-void Engine::move_block(){
-    if (Keyboard::isKeyPressed(Keyboard::Right) && touch_block_fromleft()==false && touch_wallfromleft()==false){
+void Engine::move_block(float& delay){
+
+    for(int i=0; i<4; i++){
+        block_copy[i]=block[i];
+    }
+
+    if (Keyboard::isKeyPressed(Keyboard::Right)){
         for(int i=0; i<4; i++){
             block[i].x=block[i].x+1;
         }
-        sleep(milliseconds(100));
-        }
+    sleep(milliseconds(125));
+    }
 
-    if (Keyboard::isKeyPressed(Keyboard::Left) && touch_block_fromright()==false && touch_wallfromright()==false){
+    else if (Keyboard::isKeyPressed(Keyboard::Left)){
         for(int i=0; i<4; i++){
             block[i].x=block[i].x-1;
         }
-        sleep(milliseconds(100));
+    sleep(milliseconds(125));
     }
 
-    if(Keyboard::isKeyPressed(Keyboard::Down) && touch_bottom()==false && touch_block_y()==false){
+    else if(Keyboard::isKeyPressed(Keyboard::Down)){
+        delay=0.05;
+    }
+    else{ delay=0.3; }
+
+    if(Engine::is_overlap()){
         for(int i=0; i<4; i++){
-            block[i].y=block[i].y+1;
+            block[i]=block_copy[i];
         }
-        sleep(milliseconds(50));
     }
 }
 
@@ -236,4 +134,20 @@ void Engine::attach_block(){
         }
     }
 db=db+1;
+}
+
+bool Engine::is_overlap(){
+    for(int j=1; j<4; j++){
+        for(int i=0; i<db*4; i++){
+            if(block[j].x==arrived[i].x && block[j].y==arrived[i].y){
+                return true;
+            }
+        }
+    }
+    for(int i=0; i<4; i++){
+        if(block[i].x==-1 || block[i].x==M){
+            return true;
+        }
+    }
+return false;
 }

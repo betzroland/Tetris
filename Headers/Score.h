@@ -7,11 +7,11 @@ public:
     int score;
     int highest;
 
-    Score();    // Initializing score.
+    Score();
 
-    void score_count(Engine& engine); // Counting scores, and hiding the completed rows.
+    void score_count(Engine& engine);
 
-    void save_highest();    // Saves highest score.
+    void save_highest();
 };
 
 #endif // SCORE_H_INCLUDED
